@@ -1,1 +1,1 @@
-# Modify MC321.c to Python 
+# Modify MC321.c to Python Jupyter notebook 
