@@ -1,1 +1,1 @@
-# MC321 by Hui
+# Modify MC321.c to Python 
