@@ -1,5 +1,5 @@
 ### MC321.ipynb: Tutorial of Monte Carlo simulation in Python modified from [mc321.c ](https://omlc.org/news/dec98/mc321/intro.html)
-### MC321T.c: mc321.c with a clock
+### MC321T.c: mc321.c with a timer.
 ### MC321H.chpl and photonGenerator.chpl: Chapel version of mc321.c 
 - photoGenerator.chpl: a module to generate a photon
 - `for` to `for all` : CPU paprallel 
