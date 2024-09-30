@@ -1,12 +1,13 @@
 /* 9/27/24: using NPBRandom; Python style*/
+use IO;
 use Time;
-use NPBRandom;// for 
+use NPBRandom;
 // Define photonGenerator module with all photon related parameters
 use photonGenerator;
 
 // Define optical properties 
 mua = 1.0;                /* absorption coefficient [cm^-1] */
-mus = 10;               /* scattering coefficient [cm^-1] */
+config var mus = 10;               /* scattering coefficient [cm^-1] */
 albedo = mus / (mus+mua);
 g = 0.90;                 /* anisotropy [-] */
 nt = 1.33;                /* tissue index of refraction */
@@ -15,7 +16,7 @@ radial_size = 3.0;        /* maximum radial size */
 // Define the number of grid and photon
 NR = 1000;                     /* number of radial positions */
 dr= radial_size / NR;         // Radial bin size
-config const Nphotons = 1_000_00;       /* number of photons in simulation */
+config const Nphotons = 1_000_000;       /* number of photons in simulation */
 
 proc main() { 
        
@@ -41,6 +42,8 @@ proc main() {
             } while (p.photon_status );// If photon dead, then launch new photon
         } /* end RUN */
     t.stop();
+writeln("Number of hardware threads available: ", here.maxTaskPar);
+writeln("Number of locales: ", numLocales);
 
     // Compute the radial position
     var ir: [0..NR] int = 0..NR;
