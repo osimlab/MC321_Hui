@@ -4,7 +4,7 @@
 - photoGenerator.chpl: a module to generate a photon
 - `for` to `for all` : CPU paprallel 
 - Random generator: NPBRandom
-### Simulation Comparison (1000 grids and $\mu_a$ = 0.1$mm^{-1}$)
+### Simulation Comparison (1000 grids and $\mu_a$ = 0.1 $mm^{-1}$)
 
 | NP = 1million  | C | Chapel|Chapel@CPU|Chapel@GPU|Python|
 |--------------|-------|-------|------|-------|-------|
