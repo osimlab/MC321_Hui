@@ -14,8 +14,21 @@
 |$\mu_s$ = 8 $mm^{-1}$|50.7 s|208 s|41.23 s|NA|
 |$\mu_s$ = 16 $mm^{-1}$|101.9 s|416 s|82.12 s|NA|
 
+### CPU Information
+Architecture:            x86_64 <br>
+  CPU op-mode(s):        32-bit, 64-bit<br>
+  Address sizes:         48 bits physical, 48 bits virtual<br>
+  Byte Order:            Little Endian<br>
+CPU(s):                  24<br>
+  On-line CPU(s) list:   0-23<br>
+Vendor ID:               AuthenticAMD<br>
+  Model name:            AMD Ryzen Threadripper 1920X 12-Core Processor<br>
+    CPU family:          23<br>
+    Model:               1<br>
+    Thread(s) per core:  2<br>
+    Core(s) per socket:  12<br>
 
-
+### Avaliable cores for calculation = 12
 
 
 
