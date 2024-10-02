@@ -9,7 +9,7 @@ module photonGeneratorR {
     param CHANCE = 0.1;        // Used in roulette
 
     // Define optical properties (public variables)
-    public config var mua: real;       // Absorption coefficient [cm^-1]
+    public var mua: real;       // Absorption coefficient [cm^-1]
     public var mus: real;      // Scattering coefficient [cm^-1]
     public var albedo: real;    // Albedo of tissue   
     public var g: real;        // Anisotropy [-]

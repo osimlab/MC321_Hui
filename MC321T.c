@@ -65,9 +65,9 @@ double	absorb;     /* weighted deposited in a step due to absorption */
 short   photon_status;  /* flag = ALIVE=1 or DEAD=0 */
 
 /* other variables */
-double	Csph[101];  /* spherical   photon concentration CC[ir=0..100] */
-double	Ccyl[101];  /* cylindrical photon concentration CC[ir=0..100] */
-double	Cpla[101];  /* planar      photon concentration CC[ir=0..100] */
+double	Csph[1001];  /* spherical   photon concentration CC[ir=0..100] */
+double	Ccyl[1001];  /* cylindrical photon concentration CC[ir=0..100] */
+double	Cpla[1001];  /* planar      photon concentration CC[ir=0..100] */
 double	Fsph;       /* fluence in spherical shell */
 double	Fcyl;       /* fluence in cylindrical shell */
 double	Fpla;       /* fluence in planar shell */
@@ -80,7 +80,7 @@ double	Nphotons;   /* number of photons in simulation */
 short	NR;         /* number of radial positions */
 double	radial_size;  /* maximum radial size */
 double	r;          /* radial position */
-double  dr;         /* radial bin size */
+double long dr;         /* radial bin size */
 short	ir;         /* index to radial position */
 double  shellvolume;  /* volume of shell at radial position r */
 
@@ -96,13 +96,13 @@ FILE*	target;     /* point to output file */
    Input the number of photons
 *****/
 
-mua         = 1.0;     /* cm^-1 */
-mus         = 160.0;  /* cm^-1 */
+mua         = 1;     /* cm^-1 */
+mus         = 160;  /* cm^-1 */
 g           = 0.90;  
 nt          = 1.33;
 Nphotons    = 1000000; /* set number of photons in simulation */
-radial_size = 3.0;   /* cm, total range over which bins extend */
-NR          = 100;	 /* set number of bins.  */
+radial_size = 3;   /* cm, total range over which bins extend */
+NR          = 1000;	 /* set number of bins.  */
    /* IF NR IS ALTERED, THEN USER MUST ALSO ALTER THE ARRAY DECLARATION TO A SIZE = NR + 1. */
 dr          = radial_size/NR;  /* cm */
 albedo      = mus/(mus + mua);
@@ -254,8 +254,7 @@ while (photon_status == ALIVE);
 while (i_photon < Nphotons);
 
 gettimeofday(&t1, NULL);
-long double elapsed = (1.0*(t1.tv_sec-t0.tv_sec)*1000000LL +
-                        t1.tv_usec-t0.tv_usec) / 1000000LL;
+long double elapsed = (double)(t1.tv_sec - t0.tv_sec) + ((double)(t1.tv_usec - t0.tv_usec)) / 1000000.0;
 
 printf("Number of photons : %d\n", (int)Nphotons);
 printf("Mphotons/s : %Lf\n", Nphotons/elapsed/1000000);
@@ -268,7 +267,7 @@ target = fopen("mc321.out", "w");
 
 /* print header */
 fprintf(target, "number of photons = %f\n", Nphotons);
-fprintf(target, "bin size = %5.5f [cm] \n", dr);
+fprintf(target, "bin size = %5.5Lf [cm] \n", dr);
 fprintf(target, "last row is overflow. Ignore.\n");
 
 /* print column titles */
