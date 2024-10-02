@@ -2,20 +2,26 @@
 ### MC321T.c: mc321.c with a timer.
 ### MC321H.chpl and photonGenerator.chpl: Chapel version of mc321.c.
 - photoGenerator.chpl: a module to generate a photon
-- `for` to `for all` : CPU paprallel 
-- Random generator: NPBRandom
+- `for` loop: CPU paprallel 
+- Random generator: NPBRandom()
 ### MC321HR.chpl and photonGeneratorR.chpl: Chapel version of mc321.c.
-- Random generator: Random
-
+- Random generator: Random()
+- With `for` loop
+### MC321HR_P the parallel version of MC321HR
+- `for` to `for all`
+- `with (+ reduce Csph, + reduce Ccyl, + reduce Cpla )` The reduction prevents race conditions or inconsistent updates, which can occur when multiple tasks try to update the same variables simultaneously in parallel code.
+### Commands to run the code
+- MC321T.c: `gcc -O3 --ansi MC321T.c -o MC321T -lm`
+- **.chpl: `chpl **.chpl --fast`
 ### Simulation Comparison (1000 grids and $\mu_a$ = 0.1 $mm^{-1}$)
 
-| NP = 1million  | C | Chapel|Chapel@CPU|Chapel@GPU|Python|
+| NP = 1million  | C | Chapel|Chapel Parallel @CPU|Chapel Parallel @GPU|Python|
 |--------------|-------|-------|------|-------|-------|
-|$\mu_s$ = 1 $mm^{-1}$|6.9 s|28.9 s|5.5 s|NA|290 s|
-|$\mu_s$ = 2 $mm^{-1}$|13.4 s|56.13 s|10.6 s|NA|
-|$\mu_s$ = 4 $mm^{-1}$|25.9 s|103 s|21.0 s|NA|
-|$\mu_s$ = 8 $mm^{-1}$|50.7 s|208 s|41.23 s|NA|
-|$\mu_s$ = 16 $mm^{-1}$|101.9 s|416 s|82.12 s|NA|
+|$\mu_s$ = 1 $mm^{-1}$|3.65 s|3.81 s|0.5 s|NA|290 s|
+|$\mu_s$ = 2 $mm^{-1}$|7.08 s|7.33 s|0.9 s|NA|
+|$\mu_s$ = 4 $mm^{-1}$|13.92 s|14.45 s|1.7 s|NA|
+|$\mu_s$ = 8 $mm^{-1}$|25.54 s|28.56 s|3.46 s|NA|
+|$\mu_s$ = 16 $mm^{-1}$|53.18 s|57.17 s|6.76 s|NA|
 
 ### CPU Information
 Architecture:            x86_64 <br>
