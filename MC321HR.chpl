@@ -1,15 +1,13 @@
-/* 9/27/24: using NPBRandom; Python style*/
+/* 9/30/24: using Random; Python style*/
 use IO;
 use Time;
-//use NPBRandom;
 use Random;
-
 // Define photonGenerator module with all photon related parameters
 use photonGeneratorR;
 
 // Define optical properties 
-mua = 1.0;                /* absorption coefficient [cm^-1] */
-config var mus = 20;               /* scattering coefficient [cm^-1] */
+config var mua = 1.0;                /* absorption coefficient [cm^-1] */
+config var mus = 20.0;               /* scattering coefficient [cm^-1] */
 albedo = mus / (mus+mua);
 g = 0.90;                 /* anisotropy [-] */
 nt = 1.33;                /* tissue index of refraction */
@@ -18,7 +16,7 @@ radial_size = 3.0;        /* maximum radial size */
 // Define the number of grid and photon
 NR = 1000;                     /* number of radial positions */
 dr= radial_size / NR;         // Radial bin size
-config const Nphotons = 1_000_000;       /* number of photons in simulation */
+config const Nphotons = 1000000;       /* number of photons in simulation */
 
 proc main() { 
        
@@ -29,7 +27,7 @@ proc main() {
     var	Cpla: [0..NR] real;  /* planar      photon concentration CC[ir=0..100] */
 
     t.start();
-    forall i in 1..Nphotons {
+    for i in 1..Nphotons {
         var RandGen = new randomStream(real,i); /* random number generator */
         var p = new photon(RandGen);
         do {
