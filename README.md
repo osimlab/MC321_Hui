@@ -13,15 +13,15 @@
 ### Commands to run the code
 - MC321T.c: `gcc -O3 --ansi MC321T.c -o MC321T -lm`
 - **.chpl: `chpl **.chpl --fast`
-### Simulation Comparison (1000 grids and $\mu_a$ = 0.1 $mm^{-1}$ at 1M photons and 10M photons with $^*$)
+### Simulation Comparison (1000 grids and $\mu_a$ = 0.1 $mm^{-1}$ at 1M photons and 10M photons with *)
 
 | NP = 1million  | C | Chapel|Chapel Parallel @CPU|Chapel Parallel @GPU|Python|
 |--------------|-------|-------|------|-------|-------|
-|$\mu_s$ = 1 $mm^{-1}$|3.65 s|3.81 s|0.5 s/5.2s$^*$|3s$^*$|290 s|
-|$\mu_s$ = 2 $mm^{-1}$|7.08 s|7.33 s|0.9 s/8.0s$^*$|5.7s$^*$|
-|$\mu_s$ = 4 $mm^{-1}$|13.92 s|14.45 s|1.7s/16s$^*$|10s$^*$|
-|$\mu_s$ = 8 $mm^{-1}$|25.54 s|28.56 s|3.46s/34s$^*$|19s$^*$|
-|$\mu_s$ = 16 $mm^{-1}$|53.18 s|57.17 s|6.76s/70s$^*$|37s$^*$|
+|$\mu_s$ = 1 $mm^{-1}$|3.65 s|3.81 s|0.5 s/5.2s*|3s*|290 s|
+|$\mu_s$ = 2 $mm^{-1}$|7.08 s|7.33 s|0.9 s/8.0s*|5.7s*|
+|$\mu_s$ = 4 $mm^{-1}$|13.92 s|14.45 s|1.7s/16s*|10s*|
+|$\mu_s$ = 8 $mm^{-1}$|25.54 s|28.56 s|3.46s/34s*|19s*|
+|$\mu_s$ = 16 $mm^{-1}$|53.18 s|57.17 s|6.76s/70s*|37s*|
 
 ### CPU Information
 Architecture:            x86_64 <br>
