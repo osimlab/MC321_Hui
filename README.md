@@ -39,6 +39,12 @@ Vendor ID:               AuthenticAMD<br>
 
 ### Avaliable cores for calculation = 12
 
+### mcOCT 
+- Run python MC simulation with Gaussian focused light source 
+- Including the refraction from the top surface 
+- Save all the coordinates at each scattered position 
+- Call functions throguh mcOCTFunctions
+- Plot photon traces
 
 
  
