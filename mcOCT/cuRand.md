@@ -10,7 +10,7 @@
 - When a **kernel** function ,`_global_`, is launched from the host side, execution is moved to a device where a large number of **threads** are generated.
 - A **kernel** is a function written in CUDA C/C++ that runs on the GPU.<u>The kernel is executed by all threads simultaneously, but each thread can operate on different data, allowing for parallel computation.</u>
 - **Thread** is the smallest unit of execution on the GPU. A group of threads forms a **block**.Threads within a block can communicate and share data via shared memory.Blocks can contain up to 1024 threads, though typical configurations use 128, 256, or 512 threads per block.A collection of blocks forms a **grid**.  
-<img src= "https://github.com/osimlab/MC321_Hui/blob/main/mcOCT/Images/Kernal_Grid.jpg" alt="Example Image" width="300">  
+<img src= "https://github.com/osimlab/MC321_Hui/blob/main/Images/Kernal_Grid.jpg" alt="Example Image" width="300">  
 
 ### CUDA architecture
 - **Core**: The processing unit inside GPU. Each core can handle one thread at a time.
