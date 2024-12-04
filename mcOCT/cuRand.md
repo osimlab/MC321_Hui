@@ -31,6 +31,6 @@
 - When there are more thread blocks than SMs, not all blocks can execute immediately. Some blocks are assigned to SMs initially
 - As soon as all warps within a thread block finish their tasks, the block retires, freeing the SM to take on new blocks from the grid.   
 
-<img src="Images/GPU_Arch.png" alt="Example Image" width="300">  
+<img src="Images/GPU_Arch.png" alt="GPU Architecture" width="300">   
 
 **Ref**: Lai, Z., Sun, X., Luo, Q. et al. Accelerating multi-way joins on the GPU. The VLDB Journal 31, 529–553 (2022). https://doi.org/10.1007/s00778-021-00708-y
