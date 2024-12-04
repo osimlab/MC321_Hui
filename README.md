@@ -1,12 +1,15 @@
 ### MC321.ipynb: Tutorial of Monte Carlo simulation in Python modified from [mc321.c ](https://omlc.org/news/dec98/mc321/intro.html)
-### MC321T.c: mc321.c with a timer.
+### MC321T.c: Original mc321.c with a timer.
+
 ### MC321H.chpl and photonGenerator.chpl: Chapel version of mc321.c.
-- photoGenerator.chpl: a module to generate a photon
-- `for` loop: CPU paprallel 
+- photonGenerator.chpl: a module to generate a photon
+- With`for` loop
 - Random generator: NPBRandom()
+
 ### MC321HR.chpl and photonGeneratorR.chpl: Chapel version of mc321.c.
-- Random generator: Random()
 - With `for` loop
+- Random generator: Random()
+
 ### MC321HR_P the parallel version of MC321HR
 - `for` to `for all`
 - `with (+ reduce Csph, + reduce Ccyl, + reduce Cpla )` The reduction prevents race conditions or inconsistent updates, which can occur when multiple tasks try to update the same variables simultaneously in parallel code.
@@ -39,7 +42,7 @@ Vendor ID:               AuthenticAMD<br>
 
 ### Avaliable cores for calculation = 12
 
-### mcOCT 
+### mcOCT: simulation of OCT with MC and Chapel
 - Run python MC simulation with Gaussian focused light source 
 - Including the refraction from the top surface 
 - Save all the coordinates at each scattered position 
@@ -47,4 +50,6 @@ Vendor ID:               AuthenticAMD<br>
 - Plot photon traces
 
 
- 
+ ### Other
+ - git config --global user.name "osimlab"
+ - git config --global user.name "osimlab"
