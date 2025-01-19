@@ -1,9 +1,10 @@
+// Include all functions related to a photon in MC simulation in Chapel
 module photon {
     use Math;
     use Random;
     const PI = Math.pi;
     const ONE_MINUS_COSZERO = 1.0E-12;
-// all functions related to a photon in MC simulation
+
     record mcPhoton {
     // coordinates of the photon
     var x: real;
