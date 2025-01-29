@@ -1,4 +1,5 @@
 // Include all functions related to a photon in MC simulation in Chapel
+
 module photon {
     use Math;
     use Random;
