@@ -1,4 +1,4 @@
-// Include all functions related to a photon in MC simulation in Chapel
+ // Include all functions related to a photon in MC simulation in Chapel
 
 module photon {
     use Math;
@@ -11,11 +11,21 @@ module photon {
     var x: real;
     var y: real;
     var z: real;
+
     // cos direction of the photon
     var ux: real;
     var uy: real;
     var uz: real;
-    var weight: real;
+    var weight: real ;
+
+    // Photon parameters
+    var opl: real = 0.0; // intial value is 0
+    var s: real = 0.0; // step size
+    var maxDepth: real = 0.0; // the maximum depth of a photon can reach
+
+    // status
+    var photonAlive: bool = true;
+    var escapeStatus: bool = false;
 
     // Refracts the photon direction at the boundary between two media
     proc rfPhoton(n1: real, n2: real): (real, real, real) {
@@ -71,46 +81,53 @@ module photon {
     }
 
     // Performs the MOVE step for a photon
-    proc ref mPhoton(mua: real, mus: real, n1: real, n2: real, ref rng): (real, real, real, real, real, real, real, bool, bool) {
+    proc ref mPhoton(mua: real, mus: real, n1: real, n2: real, ref rng) {
         var rnd = rng.next();
         while rnd <= 0.0 {
             rnd = rng.next();
         }
-        const s = -log(rnd) / (mua + mus);
+        s = -log(rnd) / (mua + mus);
 
-        var newX = x + s * ux;
-        var newY = y + s * uy;
-        var newZ = z + s * uz;
-        var photonAlive = true;
-        var escapeStatus = false;
-
-        if newZ <= 0.0 {            // Photon reaches the boundary 
+        // Move the photon and update the position
+        x = x + s * ux;
+        y = y + s * uy;
+        z = z + s * uz;
+        // update the optical path length
+        opl += s; 
+   
+        // Check if the photon has reached the boundary
+        // If escap then end the photon
+        if z <= 0.0 {            
             rnd = rng.next();
-            //var rF = rFresnel(n2, n1, -uz); # for unit test
+            var rF = rFresnel(n2, n1, -uz); 
             //writeln ("rF: ", rF, ' rnd: ', rnd);
-            if rnd > rF {
-                newX -= s * ux;
-                newY -= s * uy;
-                newZ -= s * uz;
-                const sToSurface = abs(newZ / uz);
-                newX += sToSurface * ux;
-                newY += sToSurface * uy;
-                newZ += sToSurface * uz;
-                (ux, uy, uz) = rfPhoton(n2, n1); // Refract the photon from the medium to the air
+            if rnd > rF {                       // Photon is refracted amd escaped
+                x -= s * ux;                    // back to the original position
+                y -= s * uy;
+                z -= s * uz;
+                const sToSurface = abs(z / uz);
+                x += sToSurface * ux;           // Move to the surface
+                y += sToSurface * uy;
+                // z += sToSurface * uz;
+                z = 0;                         // Photon is enforeced to 0
+                (ux, uy, uz) = rfPhoton(n2, n1);// Refract the photon
                 photonAlive = false;
-                escapeStatus = true;
+                escapeStatus = true;            // Photon has escaped
+                opl += sToSurface -s;          // update the optical path length due to escape
                 } 
-            else {
-                newZ = -newZ;
+            else {                             // Photon reflrcted
+                z = -z;
                 uz = -uz;
                 }
             }
-        return (newX, newY, newZ, ux, uy, uz, s, photonAlive, escapeStatus);
+        // record the maximum depth of the photon    
+        if z > maxDepth {
+            maxDepth = z;
+        }    
     }
 
-
     // Scatters photon into a new direction
-    proc ref spinPhoton(g: real, ref rng): (real, real, real) {
+    proc ref spinPhoton(g: real, ref rng) {
         var costheta: real;
         if g == 0.0 {
             costheta = 2.0 * rng.next() - 1.0; // isotropic scattering
@@ -128,26 +145,28 @@ module photon {
 
         // Check if the old direction is close to the z-axis
         if 1.0 - abs(uz) <= ONE_MINUS_COSZERO {
-            const uxx = sintheta * cosphi;
-            const uyy = sintheta * sinphi;
-            const uzz = costheta * (if uz >= 0.0 then 1.0 else -1.0);
-            return (uxx, uyy, uzz);
+            ux = sintheta * cosphi;
+            uy = sintheta * sinphi;
+            uz = costheta * (if uz >= 0.0 then 1.0 else -1.0);
         } 
         else {
-            const temp = sqrt(1.0 - uz**2);
-            const uxx = sintheta * (ux * uz * cosphi - uy * sinphi) / temp + ux * costheta;
-            const uyy = sintheta * (uy * uz * cosphi + ux * sinphi) / temp + uy * costheta;
-            const uzz = -sintheta * cosphi * temp + uz * costheta;
+            var temp = sqrt(1.0 - uz**2);
+            ux = sintheta * (ux * uz * cosphi - uy * sinphi) / temp + ux * costheta;
+            uy = sintheta * (uy * uz * cosphi + ux * sinphi) / temp + uy * costheta;
+            uz = -sintheta * cosphi * temp + uz * costheta;
 
-            const norm = sqrt(uxx * uxx + uyy * uyy + uzz * uzz);
+
            // writeln("norm: ", norm); // for test on;y
-            return (uxx / norm, uyy / norm, uzz / norm);
         }
+        var norm = sqrt(ux * ux + uy * uy + uz * uz);
+        ux = ux / norm;
+        uy = uy / norm;
+        uz = uz / norm;
       }
+
     // Drops the photon weight
-    proc dropPhoton(albedo: real): real {
-        const absorb = weight * (1.0 - albedo);
-        return weight - absorb;
+    proc ref dropPhoton(albedo: real) {
+        weight = weight*albedo;
       }
     }
 }

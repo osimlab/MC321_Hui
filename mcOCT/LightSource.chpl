@@ -13,7 +13,7 @@ module LightSource {
   proc gaussianBeam(w0: real, zf: real, wl: real, ref rng): (real, real, real, real, real, real) {
     /*
     Generates the initial position and direction cosines of a single photon
-    from a Gaussian beam for Monte Carlo simulations.
+    from a Gaussian beam at zf.
 
     Parameters:
         w0 (real): Beam waist (radius at which the field amplitude decreases to 1/e,mm).
