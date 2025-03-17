@@ -62,8 +62,8 @@ record PhotonResult {
     var maxDepth: real = 0.0; // the maximum depth of a photon can reach
     var Escap: bool = false;
     var fWeight: real = 0.0; // the final weight for the escaped photon
-    var finalCoord: [1..3] real = [1..3] 0.0;
-    var finalDir: [1..3] real = [1..3] 0.0;
+    var finalCoord: 3*real ;
+    var finalDir: 3*real ;
 }
 
 // Allocate an array for the results.
@@ -109,8 +109,8 @@ forall i in 1..nuPhoton with (+ reduce countEscape) {
             results[i].maxDepth = p.maxDepth;
             results[i].Escap = true;
             results[i].fWeight = p.weight;
-            results[i].finalCoord = [p.x, p.y, p.z];
-            results[i].finalDir = [p.ux, p.uy, p.uz]; 
+            results[i].finalCoord = (p.x, p.y, p.z);
+            results[i].finalDir = (p.ux, p.uy, p.uz); 
             countEscape += 1;
         }
 }
@@ -139,26 +139,24 @@ writeln("Number of photons escaped: ", countEscape);
 // Conduct complex convolution 
 // 
 
-/* // Open a file to write the results
+ // Open a file to write the results
 var file = open("photonData.dat", ioMode.cw);
-var fileWriter = file.writer();
+var fileWriter = file.writer(locking = true);
 fileWriter.writeln("# Photon, seed, NScattering, tOPL, maxDepth, finalWeight, Escape, finalCoord, finalDir");
 
 // Write the results to the file
-for i in 1..nuPhoton {
+forall i in 1..nuPhoton {
     if results[i].Escap {
         fileWriter.writef("%5i, %5i, %8i, %10r, %10r, %10r, %5i, %10r, %10r, %10r, %10r, %10r, %10r \n",
                             i, results[i].seed, results[i].scattering, results[i].tOPL,
                             results[i].maxDepth,results[i].fWeight,
                             (if results[i].Escap then 1 else 0),
-                            results[i].finalCoord[1], results[i].finalCoord[2], results[i].finalCoord[3],
-                            results[i].finalDir[1], results[i].finalDir[2], results[i].finalDir[3]);
+                            results[i].finalCoord[0], results[i].finalCoord[1], results[i].finalCoord[2],
+                            results[i].finalDir[0], results[1].finalDir[2], results[i].finalDir[2]);
     }
 }
 writeln("...Done.");
 // Close the file
 fileWriter.close();
 file.close();
-t.stop();
-writeln("Elapsed time(s) : ", t.elapsed());
-*/
+
